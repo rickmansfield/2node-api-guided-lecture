@@ -51,6 +51,19 @@ router.get('/:id/dogs', (req, res) => {
       });
     });
 });
+//Alternative Method. Doesn't run until commenting out the above alternative. 
+router.get('/:id/dogs', async (req, res)=>{
+  try {
+    const { id } = req.params
+    const dogs = await Adopter.findDogs(id)
+    console.log()
+    res.status(200).json(dogs)
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    })
+  }
+});
 
 router.post('/', (req, res) => {
   Adopter.add(req.body)
